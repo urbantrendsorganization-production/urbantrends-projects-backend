@@ -32,6 +32,9 @@ DEBUG = os.environ.get('DEBUG', 'true').lower() == 'true'
 _hosts = os.environ.get('ALLOWED_HOSTS', '')
 ALLOWED_HOSTS = [h.strip() for h in _hosts.split(',') if h.strip()] or ['*']
 
+_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in _origins.split(',') if o.strip()]
+
 
 # Application definition
 
@@ -74,6 +77,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 LOGIN_URL = '/api/auth/login/'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

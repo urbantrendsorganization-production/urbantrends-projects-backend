@@ -7,6 +7,9 @@ from accounts.views import GoogleLogin, AppleLogin, SubscribeView
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # allauth URLs — required for internal reversals (e.g. socialaccount_signup)
+    path('accounts/', include('allauth.urls')),
+
     # Auth
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),

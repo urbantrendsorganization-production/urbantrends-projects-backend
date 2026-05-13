@@ -1,9 +1,19 @@
 from django.contrib.auth import get_user_model
+from django.conf import settings
 from rest_framework import serializers
 
 from .models import BlogPost, Comment, Like
 
 User = get_user_model()
+
+
+class HttpsImageField(serializers.ImageField):
+    """Force https:// on image URLs when not in DEBUG mode."""
+    def to_representation(self, value):
+        url = super().to_representation(value)
+        if url and not settings.DEBUG and url.startswith('http://'):
+            url = 'https://' + url[7:]
+        return url
 
 
 class AuthorSerializer(serializers.ModelSerializer):
@@ -23,6 +33,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class BlogPostListSerializer(serializers.ModelSerializer):
     user = AuthorSerializer(read_only=True)
+    image = HttpsImageField(read_only=True)
     likes_count = serializers.IntegerField(read_only=True)
     comments_count = serializers.IntegerField(read_only=True)
 
@@ -37,6 +48,7 @@ class BlogPostListSerializer(serializers.ModelSerializer):
 
 class BlogPostDetailSerializer(serializers.ModelSerializer):
     user = AuthorSerializer(read_only=True)
+    image = HttpsImageField(read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
     likes_count = serializers.IntegerField(read_only=True)
     comments_count = serializers.IntegerField(read_only=True)

@@ -1,7 +1,7 @@
 from django.db.models import Count
 from django.utils import timezone
 from rest_framework import generics, status
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -98,7 +98,7 @@ class AdminBlogStatsView(APIView):
 # ── User ──────────────────────────────────────────────────────────────────────
 
 class BlogListView(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     serializer_class = BlogPostListSerializer
 
     def get_queryset(self):
@@ -106,7 +106,7 @@ class BlogListView(generics.ListAPIView):
 
 
 class BlogDetailView(generics.RetrieveAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     serializer_class = BlogPostDetailSerializer
     lookup_field = "slug"
 
@@ -119,7 +119,7 @@ class BlogDetailView(generics.RetrieveAPIView):
 
 
 class BlogCommentListCreateView(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = CommentSerializer
 
     def get_queryset(self):

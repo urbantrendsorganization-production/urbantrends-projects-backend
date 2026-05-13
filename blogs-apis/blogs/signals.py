@@ -28,4 +28,7 @@ def on_blog_published(sender, instance, created, **kwargs):
             instance.refresh_from_db(fields=["published_at"])
 
         subscribers = list(Subscriber.objects.values_list("email", flat=True))
-        send_new_blog_email(instance, subscribers)
+        try:
+            send_new_blog_email(instance, subscribers)
+        except Exception:
+            pass

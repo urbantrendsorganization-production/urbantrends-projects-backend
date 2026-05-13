@@ -17,10 +17,16 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(user_signed_up)
 def on_user_signed_up(request, user, **kwargs):
-    send_welcome_email(user)
+    try:
+        send_welcome_email(user)
+    except Exception:
+        pass
 
 
 @receiver(post_save, sender=Subscriber)
 def on_subscriber_created(sender, instance, created, **kwargs):
     if created:
-        send_subscription_welcome_email(instance.email)
+        try:
+            send_subscription_welcome_email(instance.email)
+        except Exception:
+            pass

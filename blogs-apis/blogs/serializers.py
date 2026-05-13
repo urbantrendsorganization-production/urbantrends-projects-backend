@@ -8,10 +8,10 @@ User = get_user_model()
 
 
 class HttpsImageField(serializers.ImageField):
-    """Force https:// on image URLs when not in DEBUG mode."""
+    """Force https:// on image URLs."""
     def to_representation(self, value):
         url = super().to_representation(value)
-        if url and not settings.DEBUG and url.startswith('http://'):
+        if url and url.startswith('http://'):
             url = 'https://' + url[7:]
         return url
 

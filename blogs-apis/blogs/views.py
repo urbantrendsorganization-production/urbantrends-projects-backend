@@ -11,6 +11,7 @@ from .serializers import (
     BlogPostListSerializer,
     BlogPostWriteSerializer,
     CommentSerializer,
+    BlogsInsightsSerializer,
 )
 
 
@@ -57,6 +58,8 @@ class AdminBlogDetailView(generics.RetrieveUpdateDestroyAPIView):
         if post.is_published and not was_published and not post.published_at:
             BlogPost.objects.filter(pk=post.pk).update(published_at=timezone.now())
 
+
+class PublicBlogsInsightsListView(generics.ListAPIView):
 
 class AdminBlogStatsView(APIView):
     permission_classes = [IsAdminUser]

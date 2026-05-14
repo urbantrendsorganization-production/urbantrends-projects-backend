@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.apple',
     'accounts',
     'blogs',
+    'blogs_insights',
 ]
 
 REST_FRAMEWORK = {

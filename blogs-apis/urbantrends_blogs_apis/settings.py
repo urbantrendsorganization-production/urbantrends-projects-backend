@@ -177,6 +177,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Groq
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
+
 # Resend
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'blogs@urbantrends.dev')

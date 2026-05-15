@@ -22,6 +22,9 @@ urlpatterns = [
 
     # Blogs
     path('api/', include('blogs.urls')),
+
+    # Blogs insights
+    path('api/', include('blogs_insights.urls')),
 ]
 
 if settings.DEBUG:
